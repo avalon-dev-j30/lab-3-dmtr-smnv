@@ -10,6 +10,7 @@ import java.io.IOException;
  *            Дожен быть перечислением
  */
 public class ConsoleUI<E extends Enum<E>> extends EnumReader<E> implements Runnable {
+    
     /**
      * Флаг, указывающий на то, должен ли интерфейс
      * продолжать обрабатывать команды.

@@ -2,31 +2,25 @@ package ru.avalon.java.actions;
 
 import java.io.*;
 import java.nio.file.*;
-import static java.nio.file.StandardCopyOption.*;
 
 /**
- * Действие, которое перемещает файлы в пределах дискового пространства.
+ * Действие, которое создает файлы в пределах дискового пространства.
  */
-public class FileMoveAction implements Action {
+public class FileCreateAction implements Action {
 
-    // пременная для хранения текущего пути файла.
-    private Path from;
-    
-    // переменная для хранения нового пути файла.
+    // переменная для хранения пути создаваемого файла.
     private Path to;
 
     /**
      * Конструктор класса.
-     * @param from - существующий путь перемещаемого файла.
-     * @param to - новый путь перемещаемого файла.
+     * @param to - путь создаваемого файла.
      */
-    public FileMoveAction(Path from, Path to) {
-        this.from = from;
+    public FileCreateAction(Path to) {
         this.to = to;
     }
 
-    private void move() throws IOException {
-        Files.move(from, to, REPLACE_EXISTING);
+    private void create() throws IOException {
+        Files.createFile(to);
         try {
             close();
         } catch (Exception ignore) {
@@ -41,7 +35,7 @@ public class FileMoveAction implements Action {
     @Override
     public void run() {
         try {
-            move();
+            create();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

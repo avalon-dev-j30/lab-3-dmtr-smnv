@@ -2,31 +2,25 @@ package ru.avalon.java.actions;
 
 import java.io.*;
 import java.nio.file.*;
-import static java.nio.file.StandardCopyOption.*;
 
 /**
- * Действие, которое перемещает файлы в пределах дискового пространства.
+ * Действие, которое удаляет файлы в пределах дискового пространства.
  */
-public class FileMoveAction implements Action {
+public class FileDeleteAction implements Action {
 
-    // пременная для хранения текущего пути файла.
+    // переменная для хранения пути удаляемого файла.
     private Path from;
-    
-    // переменная для хранения нового пути файла.
-    private Path to;
 
     /**
      * Конструктор класса.
-     * @param from - существующий путь перемещаемого файла.
-     * @param to - новый путь перемещаемого файла.
+     * @param from - путь удаляемого файла.
      */
-    public FileMoveAction(Path from, Path to) {
+    public FileDeleteAction(Path from) {
         this.from = from;
-        this.to = to;
     }
 
-    private void move() throws IOException {
-        Files.move(from, to, REPLACE_EXISTING);
+    private void delete() throws IOException {
+        Files.delete(from);
         try {
             close();
         } catch (Exception ignore) {
@@ -41,7 +35,7 @@ public class FileMoveAction implements Action {
     @Override
     public void run() {
         try {
-            move();
+            delete();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
